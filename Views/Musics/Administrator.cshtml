@@ -23,6 +23,12 @@
                 @Html.DisplayNameFor(model => model.Song)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MusicOn)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th></th>
@@ -39,6 +45,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Song)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MusicOn)
             </td>
             <td>
                 @string.Format("${0:N2}", item.Price)

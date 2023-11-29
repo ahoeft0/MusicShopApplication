@@ -64,6 +64,8 @@
                 <th>Genre</th>
                 <th>Performer</th>
                 <th>Song</th>
+                <th>Year</th>
+                <th>Media</th>
                 <th>Price</th>
             </tr>
         </thead>
@@ -74,6 +76,8 @@
                     <td>@musicItem.Genre</td>
                     <td>@musicItem.Performer</td>
                     <td>@musicItem.Song</td>
+                    <td>@musicItem.Year</td>
+                    <td>@musicItem.MusicOn</td>
                     <td>@string.Format("${0:N2}", musicItem.Price)</td>
                 </tr>
             }

@@ -11,6 +11,10 @@ namespace MusicShopApplication.Models
 
         public required string Song { get; set; }
 
+        public required int Year { get; set; }
+
+        public required string MusicOn { get; set; }
+
         public decimal Price { get; set; }
     }
 }
