@@ -25,8 +25,13 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//app.MapControllerRoute(
+//    name: "music",
+//    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Navigate to Browse Music Page by default
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "music",
+    pattern: "{controller=Musics}/{action=Index}/{id?}");
 
 app.Run();

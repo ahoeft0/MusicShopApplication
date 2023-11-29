@@ -1,47 +1,89 @@
 ﻿@model IEnumerable<MusicShopApplication.Models.Music>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Browse Music";
+
+    // Get distinct genres from the Model
+    var distinctGenres = Model.Select(m => m.Genre).Distinct().ToList();
+
+    // Get selected genre from query parameter
+    var selectedGenre = ViewContext.HttpContext.Request.Query["selectedGenre"].FirstOrDefault();
+
+    // Get distinct performers based on the selected genre
+    var distinctPerformers = Model
+        .Where(m => selectedGenre == null || m.Genre == selectedGenre)
+        .Select(m => m.Performer)
+        .Distinct()
+        .ToList();
 }
 
-<h1>Index</h1>
+<h1>Browse Music</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Performer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Performer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MusicId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MusicId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MusicId">Delete</a>
-            </td>
-        </tr>
+<form method="get" action="@Url.Action("Index", "Musics")">
+    <div>
+        @Html.Label("Filter Performers by Genre: ")
+        @Html.DropDownList("selectedGenre", new SelectList(distinctGenres, selectedGenre), new { @class = "form-control" })
+        <br />
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Select Genre</button>
+    </div>
+</form>
+
+<br />
+
+@{
+    // Get selected genre from query parameter
+    var selectedPerformer = ViewContext.HttpContext.Request.Query["selectedPerformer"].FirstOrDefault();
 }
-    </tbody>
-</table>
+
+@if ((!string.IsNullOrEmpty(selectedGenre) && distinctPerformers.Any()) || (!string.IsNullOrEmpty(selectedPerformer)))
+{
+    <form method="get" action="@Url.Action("Index", "Musics")">
+        <div>
+            @Html.Label("Filter Music by Performer: ")
+            @Html.DropDownList("selectedPerformer", new SelectList(distinctPerformers), new { @class = "form-control" })
+            <br />
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+            <a href="@Url.Action("Index", "Musics")" class="btn btn-secondary">Clear</a>
+        </div>
+    </form>
+}
+
+<br />
+
+@if (Model.Any() && !string.IsNullOrEmpty(selectedPerformer))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Genre</th>
+                <th>Performer</th>
+                <th>Song</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var musicItem in Model)
+            {
+                <tr>
+                    <td>@musicItem.Genre</td>
+                    <td>@musicItem.Performer</td>
+                    <td>@musicItem.Song</td>
+                    <td>@musicItem.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else if(!string.IsNullOrEmpty(selectedPerformer))
+{
+    <p>No Music Found.</p>
+}
+
+

@@ -9,6 +9,8 @@ namespace MusicShopApplication.Models
 
         public required string Performer { get; set; }
 
+        public required string Song { get; set; }
+
         public decimal Price { get; set; }
     }
 }

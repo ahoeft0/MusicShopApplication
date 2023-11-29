@@ -20,11 +20,33 @@ namespace MusicShopApplication.Controllers
         }
 
         // GET: Musics
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string selectedGenre, string selectedPerformer)
         {
-              return _context.Music != null ? 
-                          View(await _context.Music.ToListAsync()) :
-                          Problem("Entity set 'MusicShopApplicationContext.Music'  is null.");
+            // Query to pull all records
+            var filteredMusic = from item in _context.Music
+                                select item;
+
+            // Check for selectedGenre parameter
+            if(!String.IsNullOrEmpty(selectedGenre))
+            {
+                // Filter by Genre
+                filteredMusic = filteredMusic.Where(record => record.Genre == selectedGenre);
+            }
+
+            // Check for selectedPerformer parameter
+            if(!String.IsNullOrEmpty(selectedPerformer))
+            {
+                // Filter by Performer
+                filteredMusic = filteredMusic.Where(record => record.Performer == selectedPerformer);
+            }
+
+            // Return filtered list
+            return View(await filteredMusic.Distinct().ToListAsync());
+        }
+
+        public async Task<IActionResult> Administrator()
+        {
+            return View(await _context.Music.ToListAsync());
         }
 
         // GET: Musics/Details/5
