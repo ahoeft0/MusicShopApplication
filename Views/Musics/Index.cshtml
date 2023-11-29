@@ -27,7 +27,7 @@
     </div>
 
     <div>
-        <button type="submit" class="btn btn-primary">Select Genre</button>
+        <button type="submit" class="btn btn-primary colorScheme">Select Genre</button>
     </div>
 </form>
 
@@ -48,7 +48,7 @@
         </div>
 
         <div>
-            <button type="submit" class="btn btn-primary">Apply Filters</button>
+            <button type="submit" class="btn btn-primary colorScheme">Apply Filters</button>
             <a href="@Url.Action("Index", "Musics")" class="btn btn-secondary">Clear</a>
         </div>
     </form>
@@ -74,7 +74,7 @@
                     <td>@musicItem.Genre</td>
                     <td>@musicItem.Performer</td>
                     <td>@musicItem.Song</td>
-                    <td>@musicItem.Price</td>
+                    <td>@string.Format("${0:N2}", musicItem.Price)</td>
                 </tr>
             }
         </tbody>

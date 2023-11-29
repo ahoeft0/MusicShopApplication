@@ -78,13 +78,13 @@ namespace MusicShopApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MusicId,Genre,Performer,Price")] Music music)
+        public async Task<IActionResult> Create([Bind("MusicId,Genre,Performer,Song,Price")] Music music)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(music);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Administrator));
             }
             return View(music);
         }
@@ -110,7 +110,7 @@ namespace MusicShopApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MusicId,Genre,Performer,Price")] Music music)
+        public async Task<IActionResult> Edit(int id, [Bind("MusicId,Genre,Performer,Song,Price")] Music music)
         {
             if (id != music.MusicId)
             {
@@ -135,7 +135,7 @@ namespace MusicShopApplication.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Administrator));
             }
             return View(music);
         }
@@ -174,7 +174,7 @@ namespace MusicShopApplication.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Administrator));
         }
 
         private bool MusicExists(int id)

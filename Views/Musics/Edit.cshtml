@@ -1,10 +1,10 @@
 ﻿@model MusicShopApplication.Models.Music
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Update";
 }
 
-<h1>Edit</h1>
+<h1>Update</h1>
 
 <h4>Music</h4>
 <hr />
@@ -32,16 +32,21 @@
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
+            </div> 
+
+            <br />
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-success btn-lg" style="width: 200px" />
             </div>
         </form>
     </div>
 </div>
 
+<br />
+
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary colorScheme" asp-controller="Musics" asp-action="Administrator">Return</a>
 </div>
 
 @section Scripts {
